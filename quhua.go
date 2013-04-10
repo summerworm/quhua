@@ -7,7 +7,7 @@ import (
 	"os"
 )
 
-type Xingz struct {
+type Quhua struct {
 	Code string
 	City string
 }
@@ -27,24 +27,24 @@ func main() {
 	//session.SetMode(mgo.Monotonic, true)
 	c := session.DB("quhua").C("quhua")
 
-	var linea string
-	var lineb string
+	var code string
+	var city string
 
 	for {
 		lineByte, _, err := src.ReadLine()
 		if err != nil && err == io.EOF {
 			break
 		}
-		linea = string(lineByte)
+		code = string(lineByte)
 
 		lineByte, _, err = src.ReadLine()
 		if err != nil && err == io.EOF {
 			break
 		}
-		lineb = string(lineByte)
+		city = string(lineByte)
 
 		//写数据库
-		_ = c.Insert(&Xingz{string(linea), string(lineb)})
+		_ = c.Insert(&Quhua{string(code), string(city)})
 	}
 
 }
