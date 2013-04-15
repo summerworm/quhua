@@ -10,8 +10,9 @@ import (
 type Quhua struct {
 	Id   string "_id"
 	City string
-	Code string
+	Pid  string
 	Zip  string
+	Call string
 }
 
 func main() {
@@ -29,24 +30,41 @@ func main() {
 	//session.SetMode(mgo.Monotonic, true)
 	c := session.DB("quhua").C("quhua")
 
-	var id string
-	var city string
+	var Q Quhua
 
 	for {
 		lineByte, _, err := src.ReadLine()
 		if err != nil && err == io.EOF {
 			break
 		}
-		id = string(lineByte)
+		Q.Id = string(lineByte)
 
 		lineByte, _, err = src.ReadLine()
 		if err != nil && err == io.EOF {
 			break
 		}
-		city = string(lineByte)
+		Q.City = string(lineByte)
+
+		lineByte, _, err = src.ReadLine()
+		if err != nil && err == io.EOF {
+			break
+		}
+		Q.Pid = string(lineByte)
+
+		lineByte, _, err = src.ReadLine()
+		if err != nil && err == io.EOF {
+			break
+		}
+		Q.Zip = string(lineByte)
+
+		lineByte, _, err = src.ReadLine()
+		if err != nil && err == io.EOF {
+			break
+		}
+		Q.Call = string(lineByte)
 
 		//写数据库
-		err = c.Insert(&Quhua{id, city, "", ""})
+		err = c.Insert(&Q)
 		if err != nil {
 			panic(err)
 		}
